@@ -1,0 +1,75 @@
+<!--
+<div class="page">
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Bookings for {{specialist}}</strong></div>
+        <div class="panel-body col-md-6">
+           <div id="calendar" class="calendar" ui-calendar ng-model="eventSources"></div>
+        </div>
+    </section> 
+</div>
+-->
+<style>
+    .angular-google-map-container { 
+        /*height: 700px; */
+        height:500px;
+
+
+    }   
+</style>
+<div class="page page-profile">
+
+    <header class="profile-header">
+        <div class="profile-img">
+            <img alt="" src="{{specialist.picture}}" class="img-circle img-responsive">
+        </div>
+        
+
+        <div class="profile-info">
+            <ul class="list-unstyled list-inline">
+                <li><i class="ti-bookmark"></i> Specialties <span class="text-muted">({{specialist.specialties.length}})</span</li>
+                <li><i class="ti-bookmark"></i> Certifications <span class="text-muted">({{specialist.certifications.length}})</span</li>
+                <li><i class="ti-video-clapper"></i> Media <span class="text-muted">({{specialist.media.length}})</span></li>
+                <li class="pull-right"> Name: {{specialist.displayName}}</li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ui-tab-container ui-tab-horizontal" >
+                <uib-tabset justified="false" class="ui-tab" style="min-height: 500px;">
+                    <uib-tab heading="Personal Information">
+                           <h2>{{specialist.displayName}} </h2>
+                           <span class="badge badge-danger" style="margin-right:5px;" ng-repeat="specialty in specialist.specialties" >{{specialty}} </span>
+                            <span class="badge badge-primary" style="margin-right:5px;" ng-repeat="certificate in specialist.certifications" >{{certificate}} </span>
+                            <span class="badge badge-success" style="margin-right:5px;" ng-show="{{specialist.international}}">Available International</span>
+                           <div style="margin-top:10px; margin-bottom:10px;"></div>
+                           <p>{{specialist.description}}</p>
+                            <ui-gmap-google-map center='map.center' zoom='map.zoom' options='options'>
+                                <ui-gmap-marker 
+                                    ng-repeat="marker in markers track by $index" 
+                                    coords='marker.coords' 
+                                    idKey="$index" 
+                                    click="clicked(marker._id)"
+                                    options="{icon:'images/cheer_icon.png'}">
+                                        <ui-gmap-windows show="true">
+                                            <div ng-non-bindable>{{marker.title}}</div>
+                                        </ui-gmap-windows>
+                                </ui-gmap-marker>
+                            </ui-gmap-google-map>                           
+                           
+                    </uib-tab>                                           
+                    <uib-tab heading="Media">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="url in specialist.media">
+                                    <youtube-video video-url="url" player-width="'100%'" player-height="'300px'"></youtube-video>
+                                </li>
+                            </ul>    
+                    </uib-tab>                                    
+                </uib-tabset>
+             </div>  
+        </div>     
+        <div class="col-md-6">
+            <span id="calendar" class="calendar"  ui-calendar ng-model="eventSources"></span> 
+        </div>
+         

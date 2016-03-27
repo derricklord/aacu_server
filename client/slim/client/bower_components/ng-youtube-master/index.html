@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="youtube-app">
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div ng-controller="youtube-controller" style="margin: 0 auto; text-align: center;">
+	<div id="array">
+		<ul ng-repeat="video in videos">
+			<li style="list-style-type: none;"><button ng-click="remove(video)">x</button><br><b>Id:</b> {{video.id}}<br><b>Show Controls:</b> {{video.showControls}}<br><b>Autoplay:</b> {{video.autoplay}} </li>
+		</ul>
+		<h3>Add new video:</h3>
+		<input placeholder="add" ng-model="add" /><br>
+		<label>
+			<input type="checkbox" ng-model="showControls" ng-true-value="1" ng-false-value="0" /> Show Controls
+		</label><br>
+		<label>
+			<input type="checkbox" ng-model="autoplay" ng-true-value="1" ng-false-value="0" /> Autoplay
+		</label><br>
+		<button ng-click="addvideo()">Add Video</button>
+	</div>
+
+	<div id="controls">
+		<h1>video id: {{videoID()}}</h1>		
+		W: <input class="valbox" ng-model="width" placeholder="width"></input>
+		H: <input class="valbox" ng-model="height" placeholder="height"></input>
+		<button ng-click="go()">Next Video</button>
+	</div>
+	
+	<youtube id="{{current.id}}" width="{{width}}" height="{{height}}" current-time="time" controls="{{current.showControls}}"></youtube>
+	<br>
+	Time: {{time}}<br>
+
+	<div id="codeblock"><code>{{code()}}</code></div>
+
+</div>
+
+	<script src="js/angular.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/directive.js"></script>
+	<script src="js/service.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+<div class="modal-header ng-scope">
+    <h3>Personal Information</h3>
+</div>
+<div class="modal-body ng-scope">
+    <!-- ngRepeat: item in items --><span ng-repeat="item in items" class="list-unstyled ng-scope">
+        <label class="ui-radio"><input name="radio1" type="radio" value="item1" ng-checked="selected.item === item" ng-click="selected.item = item" checked="checked"><span class="ng-binding">item1</span></label>
+    </span><!-- end ngRepeat: item in items --><span ng-repeat="item in items" class="list-unstyled ng-scope">
+        <label class="ui-radio"><input name="radio1" type="radio" value="item2" ng-checked="selected.item === item" ng-click="selected.item = item"><span class="ng-binding">item2</span></label>
+    </span><!-- end ngRepeat: item in items --><span ng-repeat="item in items" class="list-unstyled ng-scope">
+        <label class="ui-radio"><input name="radio1" type="radio" value="item3" ng-checked="selected.item === item" ng-click="selected.item = item"><span class="ng-binding">item3</span></label>
+    </span><!-- end ngRepeat: item in items -->
+    <br>
+    Selected: <b class="ng-binding">item1</b>
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

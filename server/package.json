@@ -1,0 +1,33 @@
+{
+  "name": "mbta",
+  "version": "1.0.0",
+  "description": "MBTA portal",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Derrick A. Lord",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.0",
+    "bcrypt": "^0.8.5",
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.1.1",
+    "body-parser": "^1.14.1",
+    "cors": "^2.7.1",
+    "dotenv": "^1.2.0",
+    "express": "^4.13.3",
+    "helmet": "^1.0.1",
+    "jwt-simple": "^0.3.1",
+    "logger": "0.0.1",
+    "moment": "^2.10.6",
+    "mongoose": "^4.2.6",
+    "morgan": "^1.6.1",
+    "path": "^0.12.7",
+    "qs": "^6.0.0",
+    "request": "^2.65.0",
+    "rethinkdb": "^2.2.1",
+    "thinky": "^2.2.3"
+  }
+}

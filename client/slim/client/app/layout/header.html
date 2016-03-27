@@ -1,0 +1,108 @@
+<header class="top-header clearfix" ng-controller="headerCtrl">
+
+    <!-- Logo -->
+    <div class="logo"
+         style="background-color: #1c2b36;">
+        <a href="#/">
+            <!--<span class="logo-icon glyphicon glyphicon-map-marker"></span>-->
+            <!--<span class="logo-text">{{main.brand}}</span>-->
+            <img class="img img-responsive" src="images/aacu_logo_xs.png" style="text-align:center; margin:auto; padding: 5px;"/>
+        </a>
+    </div>
+
+    <!-- needs to be put after logo to make it work -->
+    <div class="menu-button" toggle-off-canvas>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+
+    <div class="top-nav">
+        <ul class="nav-left list-unstyled">
+            <li>
+                <a href="#/" data-toggle-nav-collapsed-min
+                             class="toggle-min"
+                             ><i class="ti-menu"></i></a>
+            </li>
+            <!--
+            <li class="search-box visible-md visible-lg">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="ti-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search...">
+                </div>
+            </li>
+            -->
+            <li>
+                <a href="http://www.aacuniverse.com"
+                             class="toggle-min"
+                             ><i class="ti-home"></i></a>
+            </li>   
+                  
+            <li class="dropdown" uib-dropdown is-open="status.isopenEmail">
+                <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown">
+                    <i class="ti-email"></i>
+                    <span class="badge badge-danger" style="background-color:#BF616A; color:white;">{{messages.length}}</span> 
+                </a>
+                <div class="dropdown-menu with-arrow panel panel-default dropdown-menu-scaleIn">
+                    <div class="panel-heading">
+                        You have {{messages.length}} messages.
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="message in messages| limitTo: 5">
+                            <a href="javascript:;" class="media">
+                                <span class="media-left media-icon">
+                                    <span class="btn-icon btn-icon-round btn-primary"><i class="ti-email"></i></span>
+                                </span>
+                                <div class="media-body">
+                                    <span class="block">{{message.author.displayName}} sent you a message</span>
+                                    <span class="text-muted block">{{message.createdAt |date : 'shortDate'}}</span>
+                                </div>
+                            </a>
+                        </li>
+                        <!--
+                        <li class="list-group-item">
+                            <a href="javascript:;" class="media">
+                                <span class="media-left media-icon">
+                                    <span class="btn-icon btn-icon-round btn-info"><i class="ti-email"></i></span>
+                                </span>
+                                <div class="media-body">
+                                    <span class="block">Jane sent you a mail</span>
+                                    <span class="text-muted">3 hours ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="javascript:;" class="media">
+                                <span class="media-left media-icon">
+                                    <span class="btn-icon btn-icon-round btn-success"><i class="ti-email"></i></span>
+                                </span>
+                                <div class="media-body">
+                                    <span class="block">Lynda sent you a mail</span>
+                                    <span class="text-muted">9 hours ago</span>
+                                </div>
+                            </a>
+                        </li>   
+                        -->                    
+                    </ul>
+                    <div class="panel-footer">
+                        <a ui-sref="messages">Show all messages.</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a ui-sref="dashboard"><i class="ti-panel"></i></a>
+            </li>  
+        </ul> 
+
+        <ul class="nav-right pull-right list-unstyled">
+
+            <li>
+                <a href="#" ui-sref="logout">
+                    <i class="ti-export"></i>
+                    <span data-translate="Logout">Logout</span>
+                </a>
+            </li>              
+        </ul>
+    </div>
+
+</header>

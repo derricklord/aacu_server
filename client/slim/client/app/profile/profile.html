@@ -1,0 +1,307 @@
+
+<div class="page page-profile">
+
+    <header class="profile-header">
+        <div class="profile-img">
+            <img alt="" src="{{profile.picture}}" class="img-circle img-responsive">
+        </div>
+        
+        <div class="profile-social">
+            <!--
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-facebook"><i class="ti-facebook"></i></a>
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-twitter"><i class="ti-twitter"></i></a>
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-instagram"><i class="ti-instagram"></i></a>
+            -->
+             <button class="btn btn-primary pull-right" ng-click="updateProfile()" style="display:inline;">Update Profile</button>
+        </div>
+
+        <div class="profile-info">
+            <ul class="list-unstyled list-inline">
+                <li><i class="ti-bookmark"></i> Specialties <span class="text-muted">({{profile.specialties.length}})</span</li>
+                <li><i class="ti-bookmark"></i> Certifications <span class="text-muted">({{profile.certifications.length}})</span</li>
+                <li><i class="ti-video-clapper"></i> Media <span class="text-muted">({{profile.media.length}})</span></li>
+                <li><i class="ti-bookmark"></i> References <span class="text-muted">({{profile.references.length}})</span</li>
+                <li><i class="ti-email"></i> Messages <span class="text-muted">({{messages.length}})</span</li>
+                <li class="pull-right"> Name: {{profile.displayName}}</li>
+            </ul>
+        </div>
+    </header>
+    <!-- ng-if="profile.role === 'Admin' || profile.role === 'Specialist'" -->
+    <div class="row">
+        <div class="col-md-12">
+            <!--
+            <div class="section-header" style="min-height: 100px;">
+                <button class="btn btn-primary pull-right" ng-click="updateProfile()" style="display:inline;">Update Profile</button>
+            </div>
+            -->
+            <div class="ui-tab-container ui-tab-horizontal" ng-show="profile.isSpecialist">
+                <uib-tabset justified="false" class="ui-tab" style="min-height: 500px;">
+                    <uib-tab heading="Personal Information">
+                           <h2>{{profile.displayName}} </h2>
+                           <span class="badge badge-danger" style="margin-right:5px;" ng-repeat="specialty in profile.specialties" >{{specialty}}  <i class="fa-x2 fa fa-close pull-right" ng-click="removeSpecialty($index)"></i> </span>
+                            <span class="badge badge-primary" style="margin-right:5px;" ng-repeat="certificate in profile.certifications" >{{certificate}} <i class="fa-x2 fa fa-close pull-right" ng-click="removeCertification($index)"></i></span>
+                           <div style="margin-top:10px; margin-bottom:10px;"></div>
+                           <form role="form">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3"  ng-model="profile.description" ></textarea>
+                                </div>
+
+                                 <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" ng-model="profile.international"> Available Internationally
+                                    </label>
+                                </div>  
+                                <div class="form-group">
+                                    <h4>Specialties</h4>
+                                    <select class="form-control" ng-model="specialty.name">
+                                        <option></option>
+                                        <option>Choreography</option>
+                                        <option>Skills Instruction</option>
+                                        <option>Music Producer</option>
+                                        <option>Team Coach</option>
+                                        <option>Skills Camp</option>
+                                    </select> 
+                                    
+                               </div>
+                                <div class="form-group">
+                                    <h4>Certifications</h4>
+                                    <select class="form-control" ng-model="certificate.name">
+                                        <option></option>
+                                        <option>Stunting Level 1</option>
+                                        <option>Stunting Level 2</option>
+                                        <option>Stunting Level 3</option>
+                                        <option>Stunting Level 4</option>
+                                        <option>Stunting Level 5</option>
+                                        <option>Stunting Level 6</option>
+                                        <option>Tumbling Level 1</option>
+                                        <option>Tumbling Level 2</option>
+                                        <option>Tumbling Level 3</option>
+                                        <option>Tumbling Level 4</option>
+                                        <option>Tumbling Level 5</option>
+                                        <option>Tumbling Level 6</option>                                       
+                                    </select> 
+                                    
+                               </div> 
+                               
+                               <div class="form-group">
+                                   <google-places location=location places=places profile=profile></google-places>
+                               </div>                                                                                                                        
+                           </form> 
+                           <button class="btn btn-danger" ng-click="addSpecialty()">Add Specialty</button> 
+                           <button class="btn btn-primary" ng-click="addCertification()">Add Certification</button> 
+                           
+                    </uib-tab>                
+                    <uib-tab heading="References">
+                            <form role="form" ng-if="profile.references.length<3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name" ng-model="reference.name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Address</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address"  ng-model="reference.address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" ng-model="reference.email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Phone</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone" ng-model="reference.phone">
+                                </div>                                
+                                <button class="btn btn-primary pull-right" ng-click="addReference()">Add Reference</button>
+                            </form>    
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="reference in profile.references">
+                                    <h3><i class="ti-user"></i> {{reference.name}}   <i class="fa-x2 fa fa-close pull-right" ng-click="removeReference($index)"></i></h3>
+                                    <p><small>{{reference.address}}</small></p>
+                                    <p><small>{{reference.email}}</small></p>
+                                    <p><small>{{reference.phone}}</small></p>
+                                </li>
+                            </ul>                                                                                                                  
+                    </uib-tab>
+                     <uib-tab heading="Locations">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="location in profile.locations">
+                                   <i class="ti-location-pin fa-x2"></i> {{location.address}} <i class="fa-x2 fa fa-close pull-right" ng-click="removeLocation($index)"></i>
+                                </li>
+                            </ul>    
+                    </uib-tab>                                 
+                    <uib-tab heading="Media">
+                            <form role="form" style="min-height: 200px;">
+                                <div class="form-group">
+                                    <label for="mediaUrl"><i class="ti-youtube fa-x2"></i> Youtube URL</label>
+                                    <input type="text" class="form-control" id="mediaUrl" placeholder="Name" ng-model="media.url">
+                                </div>                             
+                                <button class="btn btn-primary pull-right" ng-click="addMedia()">Add Media</button>
+                            </form>                        
+                            <ul class="list-group" style="margin-top:10px;">
+                                <li class="list-group-item" ng-repeat="url in profile.media">
+                                    <h3><!--<a href="{{url}}"> {{url}}</a>--> <i class="fa-x2 fa fa-close pull-right" ng-click="removeMedia($index)"></i></h3>
+                                    <youtube-video video-url="url"></youtube-video>
+                                </li>
+                            </ul>    
+                    </uib-tab>  
+                    <uib-tab heading="Booking Requests">
+                        <!--
+                           <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="booking in bookings">
+                                     <h3>{{booking.description}}</h3>
+                                     <h4><small>Requestor:</small> {{booking.author.displayName}} <span class="badge badge-primary">{{booking.bookingDate | date : 'shortDate'}}</span></h4>
+                                    <form role="form" style="min-height:120px;">
+                                        <div class="form-group">
+
+                                            <label for="bookingAmount"><small>Amount:</small> {{booking.amount|currency}}</label>
+                                            <input type="number" class="form-control" style="width:100px;" id="bookingAmount" placeholder="Amount" ng-model="booking.amount">
+                                            <div class="checkbox">
+                                                <label>
+                                                <input type="checkbox" ng-model="booking.accepted">Booking Accepted?
+                                                </label>
+                                            </div>                                        
+                                        </div>                             
+                                        <button class="btn btn-primary pull-right" ng-click="updateBooking(booking)">update</button>
+                                    </form>
+                                     <!--<button class="btn btn-primary pull-right" ui-sref="bookingUpdate({id:booking.id})">Update</button>
+                                </li>
+                            </ul>   
+                         -->
+                         <div class="col-md-5" ng-repeat="booking in bookings">   
+                            <div class="panel panel-info ui-ribbon-container ui-ribbon-primary">
+                                <div class="ui-ribbon-wrapper">
+                                    <div class="ui-ribbon" ng-show="booking.accepted">
+                                        Accepted
+                                    </div>
+                                </div>                                
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{booking.description}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                     <h4><small>Requestor:</small> {{booking.author.displayName}} <span class="badge badge-primary">{{booking.bookingDate | date : 'shortDate'}}</span></h4>
+                                    <form role="form" style="min-height:120px;">
+                                        <div class="form-group">
+
+                                            <label for="bookingAmount"><small>Amount:</small> {{booking.amount|currency}}</label>
+                                            <input type="number" class="form-control" style="width:100px;" id="bookingAmount" placeholder="Amount" ng-model="booking.amount">
+                                            <div class="checkbox">
+                                                <label>
+                                                <input type="checkbox" ng-model="booking.accepted">Booking Accepted?
+                                                </label>
+                                            </div>                                        
+                                        </div>                             
+                                        <button class="btn btn-primary pull-right" ng-click="updateBooking(booking)">update</button>
+                                    </form>
+                                </div>
+                            </div>
+                         </div> 
+                         
+                          <div class="col-md-5" ng-repeat="request in requests">   
+                            <div class="panel panel-info ui-ribbon-container ui-ribbon-primary">
+                                <div class="ui-ribbon-wrapper">
+                                    <div class="ui-ribbon" ng-show="request.accepted">
+                                        Accepted
+                                    </div>
+                                </div>                                
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{request.description}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                     <h4><small>Specialist:</small> {{request.specialist.displayName}} <span class="badge badge-primary">{{request.bookingDate | date : 'shortDate'}}</span></h4>
+                                    <form role="form" style="min-height:120px;">
+                                        <div class="form-group">
+                                            <label for="bookingAmount"><small>Amount:</small> {{request.amount|currency}}</label>
+                                        </div>           
+                                        <!--                  
+                                        <button class="btn btn-primary pull-right" >Make Deposit</button>
+                                        <form action="" method="POST">
+                                        <script
+                                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="pk_test_P6Fzy72EfzUrTkGYTLBsCZlQ"
+                                            data-amount="{{request.amount + '00'}}"
+                                            data-name="Service: {{request.specialist.displayName}}"
+                                            data-description="{{request.description}} ({{request.amount|currency}})"
+                                            data-image="/128x128.png"
+                                            data-locale="auto">
+                                        </script>
+                                        -->
+                                                                            
+                                        </form>                                        
+                                    </form>
+                                </div>
+                            </div>
+                         </div>                                                   
+                    </uib-tab>                                    
+                </uib-tabset>
+            </div>   
+            
+            <div class="ui-tab-container ui-tab-horizontal" ng-show="!profile.isSpecialist">
+                <uib-tabset justified="false" class="ui-tab" style="min-height: 500px;">                               
+                    <uib-tab heading="Booking Requests">
+                         <div class="col-md-5" ng-repeat="booking in bookings">   
+                            <div class="panel panel-info ui-ribbon-container ui-ribbon-primary">
+                                <div class="ui-ribbon-wrapper">
+                                    <div class="ui-ribbon" ng-show="booking.accepted">
+                                        Accepted
+                                    </div>
+                                </div>                                
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{booking.description}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                     <h4><small>Requestor:</small> {{booking.author.displayName}} <span class="badge badge-primary">{{booking.bookingDate | date : 'shortDate'}}</span></h4>
+                                    <form role="form" style="min-height:120px;">
+                                        <div class="form-group">
+
+                                            <label for="bookingAmount"><small>Amount:</small> {{booking.amount|currency}}</label>
+                                            <input type="number" class="form-control" style="width:100px;" id="bookingAmount" placeholder="Amount" ng-model="booking.amount">
+                                            <div class="checkbox">
+                                                <label>
+                                                <input type="checkbox" ng-model="booking.accepted">Booking Accepted?
+                                                </label>
+                                            </div>                                        
+                                        </div>                             
+                                        <button class="btn btn-primary pull-right" ng-click="updateBooking(booking)">update</button>
+                                    </form>
+                                </div>
+                            </div>
+                         </div> 
+                         
+                          <div class="col-md-5" ng-repeat="request in requests">   
+                            <div class="panel panel-info ui-ribbon-container ui-ribbon-primary">
+                                <div class="ui-ribbon-wrapper">
+                                    <div class="ui-ribbon" ng-show="request.accepted">
+                                        Accepted
+                                    </div>
+                                </div>                                
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{request.description}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                     <h4><small>Specialist:</small> {{request.specialist.displayName}} <span class="badge badge-primary">{{request.bookingDate | date : 'shortDate'}}</span></h4>
+                                    <form role="form" style="min-height:120px;">
+                                        <div class="form-group">
+                                            <label for="bookingAmount"><small>Amount:</small> {{request.amount|currency}}</label>
+                                        </div>           
+                                        <!--                  
+                                        <button class="btn btn-primary pull-right" >Make Deposit</button>
+                                        <form action="" method="POST">
+                                        <script
+                                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="pk_test_P6Fzy72EfzUrTkGYTLBsCZlQ"
+                                            data-amount="{{request.amount + '00'}}"
+                                            data-name="Service: {{request.specialist.displayName}}"
+                                            data-description="{{request.description}} ({{request.amount|currency}})"
+                                            data-image="/128x128.png"
+                                            data-locale="auto">
+                                        </script>
+                                        -->
+                                                                            
+                                        </form>                                        
+                                    </form>
+                                </div>
+                            </div>
+                         </div>                                                   
+                    </uib-tab>                                    
+                </uib-tabset>
+            </div>                                 
+        </div>        
+

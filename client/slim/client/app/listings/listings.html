@@ -1,0 +1,166 @@
+<div class="page page-table" >
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Action</strong></div>
+        <div class="panel-body">
+            <!-- Pofile panel -->
+            <div class="divider divider-md"></div>
+            <div uib-collapse="isCollapsed">
+                    <div class="well well-lg">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Name" ng-model="message.title">
+                        </div>
+                        <div class="form-group">
+                            <h4>Message</h4>
+                            <textarea class="form-control" rows="3"  ng-model="message.body" ></textarea>
+                        </div>
+                    </form>                         
+                        <button class="btn btn-primary" ng-click="postMessage()">Send</button>
+                        <button class="btn btn-danger" ng-click="cancelMessage()">Cancel</button>
+                    </div> 
+            </div>
+             <div uib-collapse="isReady">
+                    <div class="well well-lg">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Start Date</label>
+                            <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Name" ng-model="booking.bookingDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">End Date</label>
+                            <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Name" ng-model="booking.endDate">
+                        </div>                        
+                        <div class="form-group">
+                            <h4>Booking</h4>
+                            <textarea class="form-control" rows="3"  ng-model="booking.description" ></textarea>
+                        </div>
+                    </form>                         
+                        <button class="btn btn-primary" ng-click="postBooking()">Book</button>
+                        <button class="btn btn-danger" ng-click="cancelBooking()">Cancel</button>
+                    </div> 
+            </div>                       
+        </div>         
+    </section>
+     
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Specialist Listings</strong></div>
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="Search..."
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{listings.length}} entries
+                    </span>              
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th><div class="th">
+                        Actions
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('name') "
+                              data-ng-class="{active: row == 'name'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-name') "
+                              data-ng-class="{active: row == '-name'}"></span>
+                    </div></th>
+                    <th><div class="th">
+                        Specialists
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('rating') "
+                              data-ng-class="{active: row == 'rating'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-rating') "
+                              data-ng-class="{active: row == '-rating'}"></span>
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody style="height: 600px; overflow: scroll;">
+                <tr data-ng-repeat="listing in currentPageStores">
+                    <td>
+                            <!--
+                            <button class="btn btn-primary" ng-click="bookSpecialist(listing.id)">Book</button>
+                            <button class="btn btn-danger" ng-click="sendMessage(listing.id)">Message</button>  
+                            -->
+                            <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-disable="disabled">
+                                Actions <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="availability(listing)">View Details</a></li>
+                                    <li><a ng-click="bookSpecialist(listing.id)">Booking Request</a></li>
+                                    <li><a ng-click="sendMessage(listing.id)">Message</a></li>
+                                </ul>
+                            </div>    
+                            <!--             
+                            <div class="btn-group dropdown" uib-dropdown="" >
+                                <button type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle="" ng-disable="disabled" aria-haspopup="true" aria-expanded="false"> Action <span class="caret"></span> </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="bookSpecialist(listing.id)">Booking Request</a></li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="sendMessage(listing.id)">Message</a></li>
+                                </ul>
+                            </div>  
+                            -->       
+					</td>                     
+                    <td>
+                        <div class="media">
+                            <a class="pull-left" href="javascript:;">
+                                <img alt="" ng-src="{{listing.picture}}" class="img-circle img64_64">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a ng-click="availability(listing)">{{listing.displayName}}</a> 
+                                    <span class="badge badge-danger" style="margin-right:5px;" ng-repeat="specialty in listing.specialties" >{{specialty}} </span>
+                                    <span class="badge badge-primary" style="margin-right:5px;" ng-repeat="certificate in listing.certifications" >{{certificate}} </span> 
+                                </h4>
+                                <p>{{listing.description}}</p>
+                                <small>{{listing.locations[0].address.split(',')[1]}}, {{listing.locations[0].address.split(',')[2].slice(1,3)}}</small>
+                            </div>
+                        </div>                     
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show 
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select> 
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                previous-text="&lsaquo;" next-text="&rsaquo;"
+                                boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div> 
+
